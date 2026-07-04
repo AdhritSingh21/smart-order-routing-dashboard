@@ -1,0 +1,63 @@
+{
+  "split": "time-ordered 80/20 (no shuffling)",
+  "slippage_bps": {
+    "model": {
+      "mae": 2.731545515390743,
+      "rmse": 4.036547405387094
+    },
+    "baseline_recent_venue_average": {
+      "mae": 2.9988544767608842,
+      "rmse": 4.516245099645173
+    },
+    "test_rows": 5090,
+    "mae_improvement_vs_baseline_pct": 8.91370233005992
+  },
+  "fill_probability": {
+    "model": {
+      "roc_auc": 0.6641507076168784,
+      "accuracy": 0.848682015348682,
+      "brier": 0.12131426497345177
+    },
+    "baseline_recent_fill_rate": {
+      "roc_auc": 0.6284562607576891,
+      "accuracy": 0.8433433433433434,
+      "brier": 0.12858817150483817
+    },
+    "positive_rate": 0.8491825158491825,
+    "test_rows": 5994
+  },
+  "latency_ms_p95": {
+    "model_coverage": 0.9086444007858546,
+    "baseline_rolling_p95_coverage": 0.93713163064833,
+    "target_coverage": 0.95,
+    "model_mean_bound_ms": 258.38012153331925,
+    "baseline_mean_bound_ms": 374.053381348857,
+    "test_rows": 5090
+  },
+  "per_venue": {
+    "alpaca": {
+      "test_rows": 1998,
+      "slippage_mae": 1.95402049724602,
+      "slippage_baseline_mae": 2.156294909294191,
+      "realized_mean_slippage_bps": 3.7177443960191567,
+      "fill_accuracy": 0.8863863863863863,
+      "realized_fill_rate": 0.8863863863863863
+    },
+    "binance_testnet": {
+      "test_rows": 1998,
+      "slippage_mae": 3.7649471156317342,
+      "slippage_baseline_mae": 4.114685913109313,
+      "realized_mean_slippage_bps": 7.492409537559923,
+      "fill_accuracy": 0.7877877877877878,
+      "realized_fill_rate": 0.7892892892892893
+    },
+    "coinbase_sandbox": {
+      "test_rows": 1998,
+      "slippage_mae": 2.586495276328896,
+      "slippage_baseline_mae": 2.845299263708096,
+      "realized_mean_slippage_bps": 5.711816235818176,
+      "fill_accuracy": 0.8718718718718719,
+      "realized_fill_rate": 0.8718718718718719
+    }
+  }
+}
