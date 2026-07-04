@@ -1,5 +1,7 @@
 # Smart Order Routing Dashboard — ML-Driven Venue Selection
 
+[![CI](https://github.com/AdhritSingh21/smart-order-routing-dashboard/actions/workflows/ci.yml/badge.svg)](https://github.com/AdhritSingh21/smart-order-routing-dashboard/actions/workflows/ci.yml)
+
 **ML-driven venue selection fed by a live ROS 2 execution-quality pipeline.**
 
 A ROS 2 analyzer measures per-order execution quality (slippage, fill rate,
@@ -9,13 +11,21 @@ venues into a smart-order-routing recommendation, and streams predictions —
 with rolling live validation against realized outcomes — to a React dashboard
 over WebSocket.
 
+![Live dashboard — execution quality, ML venue selection, and market context](dashboard_live_run.png)
+
+*Live run: observed venue metrics (left), the routing model's next-order
+forecast with its `route` pick and rolling live validation (right), and the
+clearly-labeled BTC/USD reference feed (bottom). The amber banner marks the
+bundled demo model — trained on simulated executions, never presented as
+production-quality.*
+
 ```
 project_root/
 ├── exec_quality_ws/          ROS 2 Humble workspace — execution-quality analyzer
 │                             (per-venue slippage / fill rate / latency) + dashboard_bridge
 ├── ai_viz_platform/          FastAPI backend: exec-quality ML (dataset → training →
 │                             serving guard → live routing predictions) + React dashboard
-├── dashboard_example_run.png Screenshot of an earlier two-panel run
+├── dashboard_live_run.png    Screenshot of a live three-panel run
 └── README.md                 This file
 ```
 
@@ -163,6 +173,9 @@ cd ai_viz_platform && pytest -q            # backend: features, guard, API, e2e
 cd frontend && npm test && npm run build   # frontend: unit tests + typecheck/build
 cd ../../exec_quality_ws && python -m pytest src/exec_quality_analyzer/test -q
 ```
+
+All three suites run in CI (GitHub Actions) on every push — see the badge at
+the top of this README.
 
 ## Project in one sentence
 
