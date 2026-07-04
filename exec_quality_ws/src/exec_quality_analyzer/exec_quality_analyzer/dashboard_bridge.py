@@ -88,10 +88,12 @@ class DashboardBridge(Node):
         self._session = requests.Session()
         self._stop = threading.Event()
 
-        # Throttled-log state: [last_emit_monotonic, suppressed_count]
-        self._drop_log = [0.0, 0]
-        self._fail_log = [0.0, 0]
-        self._ok_log = [0.0, 0]
+        # Throttled-log state: [last_emit_monotonic, suppressed_count].
+        # -inf so the first occurrence always logs; time.monotonic() has an
+        # arbitrary origin and can be near zero (e.g. time-namespaced hosts).
+        self._drop_log = [float('-inf'), 0]
+        self._fail_log = [float('-inf'), 0]
+        self._ok_log = [float('-inf'), 0]
         self._delivered = 0
         self._announced_ok = False
 
