@@ -1,0 +1,143 @@
+# Per-venue parameters.
+#
+# SAFETY: mode must be one of sim | sandbox | production.
+#   - Default everywhere is sim (no network, no keys).
+#   - sandbox requires positively-confirmed testnet/sandbox activation;
+#     if it cannot be confirmed the node refuses to start.
+#   - production is refused unless allow_production_trading: true is set
+#     explicitly, and is NOT recommended for this project.
+#   - dry_run: true constructs orders but never submits (default off-sim).
+#
+# MARKET DATA vs EXECUTION:
+#   market_data_mode: venue  -> reference quotes from the (sandbox) venue
+#                               client itself (default).
+#   market_data_mode: public -> reference quotes from a separate PUBLIC,
+#                               UNAUTHENTICATED client (production market
+#                               data, read-only — it cannot submit orders).
+#                               Needed e.g. for Coinbase Advanced Trade
+#                               sandbox, which serves no usable order book.
+#   A sandbox venue quoting from public market data is flagged
+#   non-comparable and EXCLUDED from the cross-venue ranking by default
+#   (its fills are synthetic relative to its quotes). Override only with
+#   include_in_ranking: 'true'.
+#
+# TOPOLOGY: the order_submitter validates the complete topology at startup
+#   (its venue_modes must match the listeners' modes below). A non-sim
+#   listener refuses orders carrying simulated reference prices unless
+#   allow_sim_reference_for_live_testing is explicitly set on both sides.
+
+alpaca_listener:
+  ros__parameters:
+    venue: alpaca
+    mode: sim
+    dry_run: true
+    allow_production_trading: false
+    allow_sim_reference_for_live_testing: false
+    ccxt_exchange_id: alpaca
+    symbol_override: ""
+    market_data_mode: venue
+    market_data_exchange_id: ""
+    synthetic_execution: false
+    include_in_ranking: ""          # "" = conservative default
+    quote_timeout_sec: 5.0
+    quote_max_age_sec: 2.0
+    quote_retries: 2
+    quote_retry_backoff_sec: 0.5
+    max_future_timestamp_skew_sec: 5.0
+    poll_interval_sec: 1.0
+    poll_max_duration_sec: 30.0
+    poll_request_timeout_sec: 5.0
+    poll_fetch_retries: 5
+    poll_fetch_backoff_sec: 0.5
+    sim_latency_ms_mean: 120.0
+    sim_latency_ms_std: 40.0
+    sim_slippage_bps_mean: 1.0
+    sim_slippage_bps_std: 1.5
+    sim_reject_prob: 0.02
+
+binance_listener:
+  ros__parameters:
+    venue: binance_testnet
+    mode: sim
+    dry_run: true
+    allow_production_trading: false
+    allow_sim_reference_for_live_testing: false
+    ccxt_exchange_id: binance
+    symbol_override: ""
+    market_data_mode: venue         # binance testnet serves real order books
+    market_data_exchange_id: ""
+    synthetic_execution: false
+    include_in_ranking: ""
+    quote_timeout_sec: 5.0
+    quote_max_age_sec: 2.0
+    quote_retries: 2
+    quote_retry_backoff_sec: 0.5
+    max_future_timestamp_skew_sec: 5.0
+    poll_interval_sec: 1.0
+    poll_max_duration_sec: 30.0
+    poll_request_timeout_sec: 5.0
+    poll_fetch_retries: 5
+    poll_fetch_backoff_sec: 0.5
+    sim_latency_ms_mean: 60.0
+    sim_latency_ms_std: 20.0
+    sim_slippage_bps_mean: 2.5
+    sim_slippage_bps_std: 3.0
+    sim_reject_prob: 0.05
+
+coinbase_listener:
+  ros__parameters:
+    venue: coinbase_sandbox
+    mode: sim
+    dry_run: true
+    allow_production_trading: false
+    allow_sim_reference_for_live_testing: false
+    ccxt_exchange_id: coinbase
+    symbol_override: ""
+    # Coinbase Advanced Trade sandbox serves no usable real-time order
+    # book/ticker. For sandbox mode, quote from PUBLIC Coinbase market data
+    # (unauthenticated, read-only) while orders go to the sandbox:
+    #   market_data_mode: public
+    # Results are then flagged non-comparable and excluded from ranking by
+    # default, because sandbox fills measured against production quotes are
+    # synthetic and unsuitable for true venue-performance ranking.
+    market_data_mode: venue          # set to: public  when mode: sandbox
+    market_data_exchange_id: ""      # defaults to ccxt_exchange_id
+    synthetic_execution: false
+    include_in_ranking: ""
+    quote_timeout_sec: 5.0
+    quote_max_age_sec: 2.0
+    quote_retries: 2
+    quote_retry_backoff_sec: 0.5
+    max_future_timestamp_skew_sec: 5.0
+    poll_interval_sec: 1.0
+    poll_max_duration_sec: 30.0
+    poll_request_timeout_sec: 5.0
+    poll_fetch_retries: 5
+    poll_fetch_backoff_sec: 0.5
+    sim_latency_ms_mean: 95.0
+    sim_latency_ms_std: 30.0
+    sim_slippage_bps_mean: 1.8
+    sim_slippage_bps_std: 2.0
+    sim_reject_prob: 0.03
+
+order_submitter:
+  ros__parameters:
+    mode: sim                        # default mode for venues without override
+    venues: [alpaca, binance_testnet, coinbase_sandbox]
+    # Comma-separated, aligned with `venues`; "" inherits defaults.
+    # MUST match the listener modes above — the submitter validates the
+    # topology at startup and refuses incompatible configurations.
+    venue_modes: ""                  # e.g. "sim,sandbox,sandbox"
+    venue_market_data_modes: ""      # e.g. "venue,venue,public"
+    venue_exchange_ids: ""           # e.g. "alpaca,binance,coinbase"
+    allow_production_trading: false
+    allow_sim_reference_for_live_testing: false
+    symbol: BTC/USDT
+    order_quantity: 0.001
+    submit_period_sec: 2.0
+    reference_price: 65000.0
+
+metrics_engine:
+  ros__parameters:
+    order_timeout_sec: 10.0
+    unmatched_fill_timeout_sec: 5.0
