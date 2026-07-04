@@ -52,7 +52,7 @@ its next order. The model's job is modest and measurable — beat the naive
 validated on a strictly time-ordered held-out split plus rolling live
 validation in the dashboard.
 
-## Current evaluation results (honest numbers)
+## Current evaluation results
 
 The bundled model is trained on a **clearly labeled simulated replay**
 (`data_source="simulated-replay"`, `is_demo=true` — no real logs exist yet in
