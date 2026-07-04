@@ -53,7 +53,7 @@ jobs:
         with:
           python-version: "3.11"
       - name: Install dependencies
-        run: pip install numpy pytest
+        run: pip install numpy requests pytest
       - name: Tests
         run: python -m pytest src/exec_quality_analyzer/test -q
         working-directory: exec_quality_ws
