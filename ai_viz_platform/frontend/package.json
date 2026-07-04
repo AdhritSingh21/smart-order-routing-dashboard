@@ -1,0 +1,28 @@
+{
+  "name": "ai-viz-platform-dashboard",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "preview": "vite preview",
+    "test": "vitest run",
+    "test:live": "node scripts/ws-smoke-test.mjs"
+  },
+  "dependencies": {
+    "react": "19.2.7",
+    "react-dom": "19.2.7",
+    "recharts": "3.8.1"
+  },
+  "devDependencies": {
+    "@types/node": "25.9.3",
+    "@types/react": "19.2.17",
+    "@types/react-dom": "19.2.3",
+    "typescript": "6.0.3",
+    "vitest": "4.1.8",
+    "ws": "8.21.0",
+    "@vitejs/plugin-react": "6.0.2",
+    "vite": "8.0.16"
+  }
+}

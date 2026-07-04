@@ -1,0 +1,33 @@
+# Python
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+*.egg-info/
+
+# Environment / secrets
+.env
+.env.local
+*.env
+!.env.example
+
+# Node / frontend
+node_modules/
+ai_viz_platform/frontend/dist/
+ai_viz_platform/frontend/.vite/
+
+# Runtime output
+logs/
+*.jsonl
+
+# ROS 2 / colcon workspace output
+exec_quality_ws/build/
+exec_quality_ws/install/
+exec_quality_ws/log/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

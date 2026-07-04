@@ -1,0 +1,26 @@
+{
+  "model_type": "LogisticRegression direction classifier",
+  "ticker": "BTC-USD",
+  "period": "60d",
+  "interval": "5m",
+  "window": 30,
+  "feature_names": [
+    "rolling_return",
+    "volatility",
+    "momentum"
+  ],
+  "classes": [
+    0,
+    1
+  ],
+  "rows": 9969,
+  "train_rows": 7975,
+  "test_rows": 1994,
+  "data_source": "synthetic-fallback",
+  "metrics": {
+    "accuracy": 0.4929789368104313,
+    "log_loss": 0.693609893321991,
+    "roc_auc": 0.4910350649141587
+  },
+  "trained_at": "2026-06-11T22:53:35.151109+00:00"
+}

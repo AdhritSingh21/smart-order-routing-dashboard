@@ -1,0 +1,112 @@
+{
+  "model_family": "sklearn HistGradientBoosting (regression + classification + p95 quantile)",
+  "targets": {
+    "slippage_bps": "expected slippage of the next order at the venue",
+    "fill_probability": "probability the next order fully fills",
+    "latency_ms_p95": "p95 latency bound for the next order"
+  },
+  "feature_columns": [
+    "venue",
+    "orders_seen",
+    "fill_rate_short",
+    "fill_rate_long",
+    "slippage_mean_short",
+    "slippage_mean_long",
+    "slippage_std_short",
+    "slippage_p95_long",
+    "slippage_trend",
+    "latency_p50_short",
+    "latency_p95_long",
+    "latency_trend",
+    "seconds_since_last_order"
+  ],
+  "baselines": {
+    "slippage_bps": "slippage_mean_short",
+    "fill_probability": "fill_rate_short",
+    "latency_ms_p95": "latency_p95_long"
+  },
+  "data_source": "simulated-replay",
+  "source_detail": "exec_ml.simulate, orders=30000, seed=7",
+  "is_demo": true,
+  "rows": 29970,
+  "train_rows": 23976,
+  "test_rows": 5994,
+  "train_time_range": [
+    "2023-11-14T22:13:24.965247+00:00",
+    "2023-11-14T23:19:55.126519+00:00"
+  ],
+  "test_time_range": [
+    "2023-11-14T23:19:55.277305+00:00",
+    "2023-11-14T23:36:41.731990+00:00"
+  ],
+  "venues": [
+    "alpaca",
+    "binance_testnet",
+    "coinbase_sandbox"
+  ],
+  "metrics": {
+    "split": "time-ordered 80/20 (no shuffling)",
+    "slippage_bps": {
+      "model": {
+        "mae": 2.731545515390743,
+        "rmse": 4.036547405387094
+      },
+      "baseline_recent_venue_average": {
+        "mae": 2.9988544767608842,
+        "rmse": 4.516245099645173
+      },
+      "test_rows": 5090,
+      "mae_improvement_vs_baseline_pct": 8.91370233005992
+    },
+    "fill_probability": {
+      "model": {
+        "roc_auc": 0.6641507076168784,
+        "accuracy": 0.848682015348682,
+        "brier": 0.12131426497345177
+      },
+      "baseline_recent_fill_rate": {
+        "roc_auc": 0.6284562607576891,
+        "accuracy": 0.8433433433433434,
+        "brier": 0.12858817150483817
+      },
+      "positive_rate": 0.8491825158491825,
+      "test_rows": 5994
+    },
+    "latency_ms_p95": {
+      "model_coverage": 0.9086444007858546,
+      "baseline_rolling_p95_coverage": 0.93713163064833,
+      "target_coverage": 0.95,
+      "model_mean_bound_ms": 258.38012153331925,
+      "baseline_mean_bound_ms": 374.053381348857,
+      "test_rows": 5090
+    },
+    "per_venue": {
+      "alpaca": {
+        "test_rows": 1998,
+        "slippage_mae": 1.95402049724602,
+        "slippage_baseline_mae": 2.156294909294191,
+        "realized_mean_slippage_bps": 3.7177443960191567,
+        "fill_accuracy": 0.8863863863863863,
+        "realized_fill_rate": 0.8863863863863863
+      },
+      "binance_testnet": {
+        "test_rows": 1998,
+        "slippage_mae": 3.7649471156317342,
+        "slippage_baseline_mae": 4.114685913109313,
+        "realized_mean_slippage_bps": 7.492409537559923,
+        "fill_accuracy": 0.7877877877877878,
+        "realized_fill_rate": 0.7892892892892893
+      },
+      "coinbase_sandbox": {
+        "test_rows": 1998,
+        "slippage_mae": 2.586495276328896,
+        "slippage_baseline_mae": 2.845299263708096,
+        "realized_mean_slippage_bps": 5.711816235818176,
+        "fill_accuracy": 0.8718718718718719,
+        "realized_fill_rate": 0.8718718718718719
+      }
+    }
+  },
+  "sklearn_version": "1.9.0",
+  "trained_at": "2026-07-03T02:12:42.182755+00:00"
+}
