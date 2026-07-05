@@ -1,6 +1,7 @@
 # Smart Order Routing Dashboard — ML-Driven Venue Selection
 
 [![CI](https://github.com/AdhritSingh21/smart-order-routing-dashboard/actions/workflows/ci.yml/badge.svg)](https://github.com/AdhritSingh21/smart-order-routing-dashboard/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 **ML-driven venue selection fed by a live ROS 2 execution-quality pipeline.**
 
